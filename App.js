@@ -7,15 +7,7 @@
  */
 
 import React, { Component, Fragment } from "react";
-import {
-  StatusBar,
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text
-} from "react-native";
-import ListItem from "./src/components/ListItem";
+import { StatusBar, StyleSheet, View, Text } from "react-native";
 import PlaceInput from "./src/components/PlaceInput";
 import PlaceList from "./src/components/PlaceList";
 
@@ -30,7 +22,20 @@ class App extends Component {
   onPressHandleMain = names => {
     this.setState(prevState => {
       return {
-        placeName: prevState.placeName.concat(names)
+        placeName: prevState.placeName.concat({
+          key: Math.random(),
+          value: names
+        })
+      };
+    });
+  };
+
+  onDeletedItem = key => {
+    this.setState(prevState => {
+      return {
+        placeName: prevState.placeName.filter(place => {
+          return place.key !== key;
+        })
       };
     });
   };
@@ -39,15 +44,14 @@ class App extends Component {
     return (
       <Fragment>
         <StatusBar barStyle="light-content" />
-        <SafeAreaView>
-          <ScrollView contentInsetAdjustmentBehavior="automatic">
-            <View style={styles.container}>
-              <Text>List Item</Text>
-              <PlaceList placeName={this.state.placeName} />
-              <PlaceInput onPressHandleMain={this.onPressHandleMain} />
-            </View>
-          </ScrollView>
-        </SafeAreaView>
+        <View style={styles.container}>
+          <Text>Adding List Item</Text>
+          <PlaceInput onPressHandleMain={this.onPressHandleMain} />
+          <PlaceList
+            placeName={this.state.placeName}
+            onDeletedItem={this.onDeletedItem}
+          />
+        </View>
       </Fragment>
     );
   }
@@ -55,7 +59,6 @@ class App extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 10
   }
 });

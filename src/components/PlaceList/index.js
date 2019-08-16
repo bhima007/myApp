@@ -1,16 +1,19 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { FlatList } from "react-native";
 import ListItem from "../ListItem";
 
 const PlaceList = props => {
-  const placeOutput = props.placeName.map((name, index) => (
-    <ListItem
-      key={index}
-      item={name}
-      onItemPress={() => alert("Touched on item with ID - " + index)}
+  return (
+    <FlatList
+      data={props.placeName}
+      renderItem={info => (
+        <ListItem
+          item={info.item.value}
+          onItemPress={() => props.onDeletedItem(info.item.key)}
+        />
+      )}
     />
-  ));
-  return <View>{placeOutput}</View>;
+  );
 };
 
 export default PlaceList;
