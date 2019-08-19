@@ -16,7 +16,6 @@ const ListItem = props => (
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: "row",
     alignItems: "center",
     marginTop: 5,
