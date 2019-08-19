@@ -18,6 +18,7 @@ class PlaceInput extends Component {
       return;
     }
     this.props.onPressHandleMain(this.state.placeName);
+    this.setState({ placeName: "" });
   };
 
   render() {
@@ -25,6 +26,7 @@ class PlaceInput extends Component {
       <View style={styles.inputContainer}>
         <TextInput
           maxLength={30}
+          value={this.state.placeName}
           placeholder="What's next?"
           onChangeText={this.onChangeHandle}
           style={styles.placeInput}

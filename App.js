@@ -7,11 +7,10 @@
  */
 
 import React, { Component, Fragment } from "react";
-import { StatusBar, StyleSheet, View, Text, Image } from "react-native";
+import { StatusBar, StyleSheet, View, Text } from "react-native";
 import PlaceInput from "./src/components/PlaceInput";
 import PlaceList from "./src/components/PlaceList";
 import PlaceDetail from "./src/components/PlaceDetail";
-// import koala from "./src/assets/Koala.jpg";
 
 class App extends Component {
   constructor(props) {
@@ -26,7 +25,7 @@ class App extends Component {
     this.setState(prevState => {
       return {
         places: prevState.places.concat({
-          key: Math.random(),
+          key: Math.random().toString(),
           name: names,
           image: {
             uri: "https://source.unsplash.com/user/erondu/1600x900"
@@ -64,7 +63,7 @@ class App extends Component {
   render() {
     return (
       <Fragment>
-        <StatusBar barStyle="light-content" />
+        <StatusBar barStyle="dark-content" />
         <View style={styles.container}>
           <PlaceDetail
             selectedPlace={this.state.selectedPlace}
@@ -85,6 +84,7 @@ class App extends Component {
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     padding: 10
   }
 });
