@@ -5,19 +5,19 @@ class PlaceInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      names: ""
+      placeName: ""
     };
   }
 
   onChangeHandle = e => {
-    this.setState({ names: e });
+    this.setState({ placeName: e });
   };
 
   onPressHandle = () => {
-    if (this.state.names.trim() === "") {
+    if (this.state.placeName.trim() === "") {
       return;
     }
-    this.props.onPressHandleMain(this.state.names);
+    this.props.onPressHandleMain(this.state.placeName);
   };
 
   render() {

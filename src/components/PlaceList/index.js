@@ -5,11 +5,12 @@ import ListItem from "../ListItem";
 const PlaceList = props => {
   return (
     <FlatList
-      data={props.placeName}
+      data={props.places}
       renderItem={info => (
         <ListItem
-          item={info.item.value}
-          onItemPress={() => props.onDeletedItem(info.item.key)}
+          item={info.item.name}
+          image={info.item.image}
+          onItemPress={() => props.onSelectedItem(info.item.key)}
         />
       )}
     />

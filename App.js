@@ -7,37 +7,58 @@
  */
 
 import React, { Component, Fragment } from "react";
-import { StatusBar, StyleSheet, View, Text } from "react-native";
+import { StatusBar, StyleSheet, View, Text, Image } from "react-native";
 import PlaceInput from "./src/components/PlaceInput";
 import PlaceList from "./src/components/PlaceList";
+import PlaceDetail from "./src/components/PlaceDetail";
+// import koala from "./src/assets/Koala.jpg";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      placeName: []
+      places: [],
+      selectedPlace: null
     };
   }
 
   onPressHandleMain = names => {
     this.setState(prevState => {
       return {
-        placeName: prevState.placeName.concat({
+        places: prevState.places.concat({
           key: Math.random(),
-          value: names
+          name: names,
+          image: {
+            uri: "https://source.unsplash.com/user/erondu/1600x900"
+          }
         })
       };
     });
   };
 
-  onDeletedItem = key => {
+  onSelectedItem = key => {
     this.setState(prevState => {
       return {
-        placeName: prevState.placeName.filter(place => {
-          return place.key !== key;
+        selectedPlace: prevState.places.find(place => {
+          return place.key == key;
         })
       };
     });
+  };
+
+  placeDeletedHandler = () => {
+    this.setState(prevState => {
+      return {
+        places: prevState.places.filter(place => {
+          return place.key !== prevState.selectedPlace.key;
+        }),
+        selectedPlace: null
+      };
+    });
+  };
+
+  modalCloseHandler = () => {
+    this.setState({ selectedPlace: null });
   };
 
   render() {
@@ -45,11 +66,16 @@ class App extends Component {
       <Fragment>
         <StatusBar barStyle="light-content" />
         <View style={styles.container}>
+          <PlaceDetail
+            selectedPlace={this.state.selectedPlace}
+            onItemDeleted={this.placeDeletedHandler}
+            onModalClosed={this.modalCloseHandler}
+          />
           <Text>Adding List Item</Text>
           <PlaceInput onPressHandleMain={this.onPressHandleMain} />
           <PlaceList
-            placeName={this.state.placeName}
-            onDeletedItem={this.onDeletedItem}
+            places={this.state.places}
+            onSelectedItem={this.onSelectedItem}
           />
         </View>
       </Fragment>
