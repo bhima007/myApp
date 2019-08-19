@@ -1,46 +1,39 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, TextInput, Button } from "react-native";
 
-class PlaceInput extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      placeName: ""
-    };
-  }
+const PlaceInput = props => {
+  const [placeName, setPlaceName] = useState("");
 
-  onChangeHandle = e => {
-    this.setState({ placeName: e });
+  const onChangeHandle = e => {
+    setPlaceName(e);
   };
 
-  onPressHandle = () => {
-    if (this.state.placeName.trim() === "") {
+  const onPressHandle = () => {
+    if (placeName.trim() === "") {
       return;
     }
-    this.props.onPressHandleMain(this.state.placeName);
-    this.setState({ placeName: "" });
+    props.onPressHandleMain(placeName);
+    setPlaceName("");
   };
 
-  render() {
-    return (
-      <View style={styles.inputContainer}>
-        <TextInput
-          maxLength={30}
-          value={this.state.placeName}
-          placeholder="What's next?"
-          onChangeText={this.onChangeHandle}
-          style={styles.placeInput}
-        />
-        <Button
-          onPress={this.onPressHandle}
-          title="Add"
-          color="#fb9600"
-          accessibilityLabel="Adding new string to state"
-        />
-      </View>
-    );
-  }
-}
+  return (
+    <View style={styles.inputContainer}>
+      <TextInput
+        maxLength={30}
+        value={placeName}
+        placeholder="What's next?"
+        onChangeText={onChangeHandle}
+        style={styles.placeInput}
+      />
+      <Button
+        onPress={onPressHandle}
+        title="Add"
+        color="#fb9600"
+        accessibilityLabel="Adding new string to state"
+      />
+    </View>
+  );
+};
 
 const styles = StyleSheet.create({
   inputContainer: {
